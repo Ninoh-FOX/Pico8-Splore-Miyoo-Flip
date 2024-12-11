@@ -1,0 +1,6 @@
+{
+    "label":"Pico8 Full Screen",
+    "icon":"pico8.png",
+    "launch":"launch.sh",
+    "description":"Pico8 splore standalone"
+}
