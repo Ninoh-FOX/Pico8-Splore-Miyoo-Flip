@@ -24,10 +24,27 @@ draw_rect="-draw_rect 0,0,${width},${height}"
 
 pico8_64 -splore $draw_rect -root_path "/mnt/SDCARD/Roms/PICO8/" 2>&1 | tee $HOME/log.txt
 
-for file in /mnt/SDCARD/App/Pico8/.lexaloffle/pico-8/bbs/carts/*.p8.png; do
-    dest="/mnt/SDCARD/Roms/PICO8/$(basename "$file")"
+src_dir="/mnt/SDCARD/App/Pico8/.lexaloffle/pico-8/bbs/carts"
+dest_dir="/mnt/SDCARD/Roms/PICO8"
+img_dir="/mnt/SDCARD/Roms/PICO8/media/images"
+database="/mnt/SDCARD/Roms/PICO8/PICO8_cache6.db"
+
+mkdir -p "$dest_dir" "$img_dir"
+
+if [ -f "$database" ]; then
+    rm -f "$database"
+fi
+
+for file in "$src_dir"/*.p8.png; do
+    [ -e "$file" ] || continue
+
+    base=$(basename "$file" .p8.png)
+    dest="$dest_dir/$base.p8"
+    img="$img_dir/$base.png"
+
     if [ ! -e "$dest" ]; then
         cp "$file" "$dest"
+        cp "$file" "$img"
     fi
 done
 
